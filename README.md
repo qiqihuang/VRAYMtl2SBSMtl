@@ -44,6 +44,11 @@ sbs文件为设计文件（类似于max），而Unity3d能识别的材质是sbsa
 支持UV展开和贴图，支持贴图的Mask、Falloff和Mix
 
 # 转换示例
+MAX中的模型
 ![MAX中的模型](https://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20MAX.png)
+
+Unity中未贴材质之前的模型
 ![Unity中未贴材质之前的模型](https://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20Unity(before%20replace%20material).png)
-![Unity中贴转换后材质的模型](hhttps://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20Unity(after%20replace%20material).png)
+
+Unity中贴转换后材质的模型
+![Unity中贴转换后材质的模型](https://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20Unity(after%20replace%20material).png)
