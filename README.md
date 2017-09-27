@@ -37,3 +37,13 @@ VRayMtl2SBS.ms(3ds Max 2014) 基于[VRayMtlConverter v2.5](http://www.scriptspot
 template.sbs文件为Substance Designer模板（如需运行程序，请安装[Substance Designer](https://www.allegorithmic.com/)程序），C++代码的工作就是将JSON内容填充到Substance Designer模板中，得到sbs文件。
 
 sbs文件为设计文件（类似于max），而Unity3d能识别的材质是sbsar（类似于fbx），从sbs到sbsar，需要使用Substance Designer提供的烘焙功能。C++代码中通过命令行调用Substance Designer的sbscooker.exe程序完成材质烘焙。
+
+# 兼容性
+支持Multimaterial、compositematerial、Standardmaterial、Blend、Shellac、VRayMtlWrapper、VRayBlendMtl、VRayOverrideMtl、VRay2SidedMtl和VRayMtl材质
+
+支持UV展开和贴图，支持贴图的Mask、Falloff和Mix
+
+# 转换示例
+![MAX中的模型](https://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20MAX.png)
+![Unity中未贴材质之前的模型](https://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20Unity(before%20replace%20material).png)
+![Unity中贴转换后材质的模型](hhttps://github.com/qiqihuang/VRAYMtl2SBSMtl/blob/master/Model%20in%20Unity(after%20replace%20material).png)
