@@ -1,0 +1,17 @@
+{
+				"name": "f407b42f-86b7-48b7-8ff0-5c46c760dcff",
+				"basecolor": {
+					"bitmap": "C:/Users/QI/Desktop/9247/Tikva_001.jpg",
+					"color": "0.430326 0.430326 0.430326 1.0"
+				},
+				"normal": {
+					"bitmap": "C:/Users/QI/Desktop/9247/ed307d03-c373-4fdf-b2c5-2d280f6c43b7.jpg",
+					"intensity": "0.05"
+				},
+				"roughness": {
+					"color": "0.443961 0.443961 0.443961 1.0"
+				},
+				"metallic": {
+					"color": "0.0224084 0.0224084 0.0224084 1.0"
+				}
+			}
