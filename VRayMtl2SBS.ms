@@ -1619,6 +1619,71 @@ fn F_CaptureViewPortDib =
 	return bitImg
 )
 
+fn F_WriteFile filePath fileData =
+(
+	fs = openFile filePath mode:"w+"
+
+	format "%" fileData to:fs
+	flush fs
+	close fs
+)
+
+fn F_RotatePivotOnly obj rotation =
+(
+	local rotValInv = inverse (rotation as quat)
+	animate off in coordsys local obj.rotation *= rotValInv
+	obj.objectoffsetpos *= rotValInv
+	obj.objectoffsetrot *= rotValInv
+)
+
+fn RotatePivotOnlyAbsolute obj rotation = 
+(
+	--capture current rotation
+	currentRot=obj.objectoffsetrot as eulerangles
+	--not performance oriented readablity step
+	wishRot=rotation
+	--calculate the difference
+	needRot=(currentRot as quat - wishRot as quat) as eulerangles
+	--rotate only the pivot
+	F_RotatePivotOnly obj needRot
+)
+
+fn F_AvgColor bitImg =
+(
+	local fSumR = 0.0
+	local fSumG = 0.0
+	local fSumB = 0.0
+	
+	local nW = bitImg.width
+	local nH = bitImg.height
+	
+	local iCount = 0
+	for r=0 to nH-1 do
+	(
+		local pixels = getpixels bitImg [0,r] nW
+		
+		for c=1 to nW do
+		(
+			local p = pixels[c]
+			
+			--alpha权重
+			local iWeight = (p.a / 255)
+			
+			fSumR += p.r * iWeight
+			fSumG += p.g * iWeight
+			fSumB += p.b * iWeight
+			
+			iCount += iWeight
+		)
+	)
+	
+	local fAvgR = fSumR / iCount
+	local fAvgG = fSumG / iCount
+	local fAvgB = fSumB / iCount
+	
+	return (color fAvgR fAvgG fAvgB)
+)
+
 --
 max zoomext sel all
 completeredraw()
@@ -1706,15 +1771,6 @@ F_ShowMaterialInViewPort()
 --viewport.ZoomToBounds true (point3 0 0 0) (point3 0 0 0)
 
 
-fn F_WriteFile filePath fileData =
-(
-	fs = openFile filePath mode:"w+"
-
-	format "%" fileData to:fs
-	flush fs
-	close fs
-)
-
 --转换为SBS材质
 for theMtl in sceneMaterials do
 (
@@ -1731,6 +1787,13 @@ for theMtl in sceneMaterials do
 	format "diffuse %\n" theMat.diffuse
 	format "reflection %\n" theMat.reflection
 	format "reflection_fresnel %\n" theMat.reflection_ior
+	
+	if (undefined != theMat.texmap_reflection) do
+	(
+		texmapImg = openBitMap theMat.texmap_diffuse.fileName
+		theMat.reflection = F_AvgColor texmapImg
+		format "使用贴图反射 reflection %\n" theMat.reflection
+	)
 	
 	if false == theMat.option_traceReflection do
 	(
@@ -1908,26 +1971,6 @@ for theMtl in sceneMaterials do
 for m in objects do
 (
 	converttopoly m
-)
-
-fn F_RotatePivotOnly obj rotation =
-(
-	local rotValInv = inverse (rotation as quat)
-	animate off in coordsys local obj.rotation *= rotValInv
-	obj.objectoffsetpos *= rotValInv
-	obj.objectoffsetrot *= rotValInv
-)
-
-fn RotatePivotOnlyAbsolute obj rotation = 
-(
-	--capture current rotation
-	currentRot=obj.objectoffsetrot as eulerangles
-	--not performance oriented readablity step
-	wishRot=rotation
-	--calculate the difference
-	needRot=(currentRot as quat - wishRot as quat) as eulerangles
-	--rotate only the pivot
-	F_RotatePivotOnly obj needRot
 )
 
 --Y轴朝上
