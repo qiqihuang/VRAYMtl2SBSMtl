@@ -1790,8 +1790,12 @@ for theMtl in sceneMaterials do
 	
 	if (undefined != theMat.texmap_reflection) do
 	(
-		texmapImg = openBitMap theMat.texmap_diffuse.fileName
+		reflectIntensity = theMat.texmap_reflection_multiplier / 100
+		
+		texmapImg = openBitMap theMat.texmap_reflection.fileName
 		theMat.reflection = F_AvgColor texmapImg
+		theMat.reflection *= reflectIntensity
+		
 		format " π”√Ã˘Õº∑¥…‰ reflection %\n" theMat.reflection
 	)
 	
